@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef, KeyboardEvent, useMemo, useState } from 'react';
+import { ChangeEvent, forwardRef, KeyboardEvent, useEffect, useMemo, useState } from 'react';
 import { useField, type InputProps } from '@strapi/strapi/admin';
 import { Field, Flex } from '@strapi/design-system';
 import { Item } from '../Item';
@@ -23,6 +23,7 @@ type SortableInputProps = InputProps & {
   attribute: {
     options: {
       inputRegex?: string;
+      defaultValue?: string;
     };
   };
 };
@@ -43,6 +44,7 @@ const SortableInput = forwardRef<HTMLDivElement, SortableInputProps>(
     const field = useField(name);
 
     const regexPattern = attribute.options?.inputRegex;
+    const defaultValue = attribute.options?.defaultValue;
 
     const [errorString, setErrorString] = useState(field.error);
     const [inputValue, setInputValue] = useState('');
@@ -51,8 +53,25 @@ const SortableInput = forwardRef<HTMLDivElement, SortableInputProps>(
       if (Array.isArray(field.value)) {
         return field.value.map((item: string) => createItem(item));
       }
+      if (defaultValue) {
+        const defaults = defaultValue
+          .split('\n')
+          .map((s) => s.trim())
+          .filter((s) => s !== '');
+        if (defaults.length > 0) return defaults.map(createItem);
+      }
       return [];
     });
+
+    useEffect(() => {
+      if (!Array.isArray(field.value) && defaultValue) {
+        const defaults = defaultValue
+          .split('\n')
+          .map((s) => s.trim())
+          .filter((s) => s !== '');
+        if (defaults.length > 0) field.onChange(name, defaults);
+      }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
     const sensors = useSensors(
       useSensor(PointerSensor),
       useSensor(KeyboardSensor, {

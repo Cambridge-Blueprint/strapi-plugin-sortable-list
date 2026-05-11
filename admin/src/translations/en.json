@@ -1,5 +1,7 @@
 {
   "strapi-plugin-sortable-list.plugin.name": "Sortable List",
+  "strapi-plugin-sortable-list.options.advanced.defaultValue": "Default value",
+  "strapi-plugin-sortable-list.options.advanced.defaultValue.description": "One item per line. Pre-fills the list when creating a new entry.",
   "strapi-plugin-sortable-list.label": "Sortable List",
   "strapi-plugin-sortable-list.description": "Add multiple values to a sortable list",
   "strapi-plugin-sortable-list.options.advanced.regex": "RegExp pattern",

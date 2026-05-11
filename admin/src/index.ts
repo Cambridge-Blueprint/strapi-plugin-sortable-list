@@ -33,6 +33,18 @@ export default {
         advanced: [
           {
             intlLabel: {
+              id: `${PLUGIN_ID}.options.advanced.defaultValue`,
+              defaultMessage: 'Default value',
+            },
+            name: 'options.defaultValue',
+            type: 'textarea',
+            description: {
+              id: `${PLUGIN_ID}.options.advanced.defaultValue.description`,
+              defaultMessage: 'One item per line. Pre-fills the list when creating a new entry.',
+            },
+          },
+          {
+            intlLabel: {
               id: `${PLUGIN_ID}.options.advanced.regex`,
               defaultMessage: 'RegExp pattern',
             },
